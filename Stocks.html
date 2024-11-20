@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Portfolio Project</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Style.css">
+</head>
+
+<body>
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Visual Overview Section -->
+    <style>
+
+        .sql-code-block {
+            background-color: #e0e0e0; /* Gris claro */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-family: 'Courier New', Courier, monospace; /* Fuente tipo código */
+            font-size: 16px;
+            overflow-x: auto; /* Para que se haga scroll si el código es largo */
+        }
+    </style>
+
+    <section id="visual-overview" class="py-5">
+        <div class="container mt-5">
+            
+            <h1>Stocks Performance</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="./Stocks performance Picture/DASHBOARD.jpg" class="img-fluid mb-4" alt="Power BI Dashboard">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Stocks performance Picture/SNOWFLAKE QUERY.jpg" class="img-fluid mb-4" alt="Data-Model">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Stocks performance Picture/Python Script.jpg" class="img-fluid mb-4" alt="SQL Code">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Stocks performance Picture/DATA MODEL.jpg" class="img-fluid mb-4" alt="Excel Spreadsheet">
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Business Request & User Stories Section -->
+<section id="business-request" class="py-5 bg-light">
+  <div class="container">
+      <h2>Business Request & User Stories</h2>
+      <p>The goal of this data analysis project is to deliver a comprehensive stock performance dashboard designed for investors and financial analysts. To address the business requirements effectively, a set of user stories was outlined to guide the project and ensure all deliverables met the defined acceptance criteria throughout its development.</p>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>As a (role)</th>
+                  <th>I want (request/demand)</th>
+                  <th>So that I (user value)</th>
+                  <th>Acceptance Criteria</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>1</td>
+                  <td>Financial Analyst</td>
+                  <td>View the stock performance of a specific company over a selected time period</td>
+                  <td>Analyze the stock price trends, volume, and key financial ratios</td>
+                  <td>A Power BI dashboard with time series data and key financial metrics</td>
+              </tr>
+              <tr>
+                  <td>2</td>
+                  <td>Investor</td>
+                  <td>Compare the debt to equity ratio, return on equity (ROE), and price to earnings (P/E) ratio of multiple companies</td>
+                  <td>Make informed investment decisions based on the company’s financial health</td>
+                  <td>A Power BI dashboard with comparison charts for multiple companies</td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>Dividend Investor</td>
+                  <td>Monitor the dividend yield of companies</td>
+                  <td>Ensure that my investments are generating the expected income</td>
+                  <td>A Power BI dashboard that tracks dividend yields over time</td>
+              </tr>
+              <tr>
+                  <td>4</td>
+                  <td>Stock Market Enthusiast</td>
+                  <td>Track the EPS of various companies over time</td>
+                  <td>Identify trends and make decisions on which stocks to invest in</td>
+                  <td>A Power BI dashboard with EPS trends for selected companies</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</section>
+
+
+        <section id="data-cleansing" class="py-5 bg-light">
+            <div class="container">
+                <h2>Extraction, Cleansing & Transformation (Python)</h2>
+                <p>To build the necessary data model for analysis and meet the business requirements described in the user stories, data was extracted, cleansed, and transformed using Python and the Yahoo Finance API. The data was gathered from Yahoo Finance and stored in CSV files.</p>
+                <p>The cleaned and transformed data is now ready to be loaded into a data warehouse for use in dashboards and further analytical processes.</p>
+                <p> The Python script below was used to extract, clean and transform the necessary data.</p>
+                <strong>Stocks.py</strong>:</p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+          import yfinance as yf
+          import pandas as pd
+          from datetime import datetime, timedelta
+          
+          COMPANIES = [
+          "AAPL", "MSFT", "GOOG", "AMZN", "META", "NVDA", "TSLA", "INTC", "CSCO", "BIDU", 
+          "AMD", "PYPL", "NFLX", "BABA", "ORCL", "SHOP", "SQ", "ZM", "UBER", "SNAP", "RBLX", 
+          "ADBE", "TXN", "MU", "QCOM", "V", "MA", "CRM", "LULU", "WMT", "ROKU", "DOCU", "SPOT", 
+          "WIX", "SHOP", "EXPE", "FSLY", "CRWD", "ZS", "NET", "PSTG", "MELI", "RKT", "AFRM", 
+          "COUP", "MSTR", "VEEV", "HUBS", "GTLB", "GME", "VRSN", "BILL", "HPE", "SWKS", "AKAM", 
+          "TTD", "FAST", "ALGN", "SPLK", "OKTA", "FIVN", "PSTG", "RNG", "DOCU", "DDOG", "VSH", 
+          "CGNX", "ON", "CRIS", "RPTX", "PLUG", "SYY", "U", "PDD", "ENPH", "BE", "EGLX", "SMAR", 
+          "OKTA", "FVRR", "SPLK", "SHOP", "VEEV", "HUBS", "FSLY", "BIDU", "ROKU", "SPOT", "AAXN", 
+          "CALX", "GRMN", "TEAM", "EXEL", "ISRG", "STZ", "NEE", "BA", "HOLX", "BLK", "LUV", "PCAR", 
+          "ZBRA", "FFIV", "CHKP", "CSCO", "GLW", "KLAC", "JNJ", "PG", "XOM", "WFC", "T", "VZ", "UNH", 
+          "CVX", "HD", "KO", "PEP", "MCD", "DIS", "NKE", "PFE", "MRK", "ABBV", "LLY", "JPM", "BAC",
+          "GS", "C", "USB", "AXP", "MS", "BK", "DFS", "GILD", "REGN", "VRTX",
+          "AMGN", "BIIB", "BMY", "CI", "ANTM", "HUM", "CNC", "WBA", "CVS", "GE",
+          "MMM", "HON", "ITW", "CAT", "DE", "DHR", "TMO", "ABT", "RTX", "LMT",
+          "NOC", "GD", "BA", "TXT", "LHX", "HII", "LDOS", "SAIC", "LLY", "BNTX",
+          "PFE", "MRNA", "NVAX", "AZN", "SNY", "RHHBY", "GSK", "TSM", "INTC",
+          "ASML", "AMD", "AMAT", "LRCX", "KLAC", "QCOM", "TXN", "NXPI", "AVGO",
+          "ADI", "MCHP", "SWKS", "MPWR", "ON", "SGH", "GFS", "UMC"
+      ]
+
+      # Generate a date range from November 15, 2023, to November 15, 2024
+      dates = pd.date_range(start="2023-11-15", end="2024-11-15", freq='MS') + timedelta(days=14)
+      
+      # Initialize lists for data
+      stocks_data = []
+      financial_ratios_data = []
+      sector_industry_data = []
+      eps_data = []
+      debt_to_equity_data = []
+      
+      print("Starting data collection...")
+      
+      # Fetch data for each company for each date
+      for company in COMPANIES:
+          for date in dates:
+              try:
+                  print(f"Processing {company} on {date}...")
+                  
+                  # Dates to fetch data
+                  start_date = (date - timedelta(days=15)).strftime('%Y-%m-%d')
+                  end_date = (date + timedelta(days=15)).strftime('%Y-%m-%d')
+                  stock = yf.Ticker(company)
+                  
+                  # Fetch historical price data
+                  stock_data = stock.history(start=start_date, end=end_date)
+                  if not stock_data.empty:
+                      df_prices = stock_data[['Open', 'High', 'Low', 'Close', 'Volume']].copy()
+                      df_prices.columns = ["open_price", "high_price", "low_price", "close_price", "volume"]
+                      df_prices.index = pd.to_datetime(df_prices.index)
+                      df_prices['company'] = company
+                      df_prices['date'] = date
+                      stocks_data.append(df_prices)
+                  
+                  # Fetch financial ratios
+                  info = stock.info
+                  financial_ratios_data.append({
+                      "symbol": company,
+                      "date": date,
+                      "pe_ratio": info.get("trailingPE", None),  # P/E ratio
+                      "roe": info.get("returnOnEquity", None),  # Return on equity
+                      "dividend_yield": info.get("dividendYield", None)  # Dividend yield
+                  })
+      
+                  # Sector and industry
+                  sector_industry_data.append({
+                      "symbol": company,
+                      "date": date,
+                      "sector": info.get("sector", None),
+                      "industry": info.get("industry", None)
+                  })
+      
+                  # EPS
+                  eps_data.append({
+                      "symbol": company,
+                      "date": date,
+                      "eps": info.get("trailingEps", None)
+                  })
+      
+                  # Debt-to-equity ratio
+                  debt_to_equity_data.append({
+                      "symbol": company,
+                      "date": date,
+                      "debt_to_equity": info.get("debtToEquity", None)
+                  })
+      
+              except Exception as e:
+                  print(f"Error processing data for {company} on {date}: {e}")
+                  continue
+      
+      # Verify and save the data
+      print(f"{len(stocks_data)} stock data entries collected.")
+      print(f"{len(financial_ratios_data)} financial ratios entries collected.")
+      print(f"{len(sector_industry_data)} sector and industry entries collected.")
+      print(f"{len(eps_data)} EPS entries collected.")
+      print(f"{len(debt_to_equity_data)} debt-to-equity entries collected.")
+      
+      # Save FACT and DIM tables
+      if stocks_data:
+          all_stocks_data = pd.concat(stocks_data)
+          all_stocks_data.to_csv("FACT_stock_prices.csv", index_label="date")
+          print("FACT_stock_prices.csv successfully created.")
+      
+      financial_ratios_df = pd.DataFrame(financial_ratios_data).drop_duplicates()
+      financial_ratios_df.to_csv("DIM_financial_ratios_table.csv", index=False)
+      print("DIM_financial_ratios_table.csv successfully created.")
+      
+      sector_industry_df = pd.DataFrame(sector_industry_data).drop_duplicates()
+      sector_industry_df.to_csv("DIM_sector_industry_table.csv", index=False)
+      print("DIM_sector_industry_table.csv successfully created.")
+      
+      eps_df = pd.DataFrame(eps_data).drop_duplicates()
+      eps_df.to_csv("DIM_eps_table.csv", index=False)
+      print("DIM_eps_table.csv successfully created.")
+      
+      debt_to_equity_df = pd.DataFrame(debt_to_equity_data).drop_duplicates()
+      debt_to_equity_df.to_csv("DIM_debt_to_equity_table.csv", index=False)
+      print("DIM_debt_to_equity_table.csv successfully created.")
+      
+      print("All tables have been created and saved as CSV files.")
+          
+        </code>
+                </pre>
+            </div>
+      
+</section>
+
+
+        <section id="data-cleansing" class="py-5 bg-light">
+            <div class="container">
+                <h2>Load (Python, SQL, Snowflake)</h2>
+                <p>To load the cleaned and transformed data into Snowflake, both an SQL script and a Python script were utilized. This combination ensured that the data was correctly structured and efficiently transferred into the data warehouse, making it accessible for subsequent analysis</p>
+
+                <strong>create_all_stock_analysis_tables.sql</strong>:</p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+          CREATE TABLE MY_DATABASE.PUBLIC.FACT_STOCK_PRICES (
+            DATE DATE,
+            COMPANY STRING,
+            OPEN_PRICE FLOAT,
+            HIGH_PRICE FLOAT,
+            LOW_PRICE FLOAT,
+            CLOSE_PRICE FLOAT,
+            VOLUME INT
+        );
+        
+        CREATE TABLE DIM_financial_ratios_table (
+            symbol STRING,
+            date TIMESTAMP,
+            pe_ratio FLOAT,
+            roe FLOAT,
+            dividend_yield FLOAT
+        );
+        
+        CREATE TABLE DIM_sector_industry_table (
+            symbol STRING,
+            date TIMESTAMP,
+            sector STRING,
+            industry STRING
+        );
+        CREATE TABLE DIM_eps_table (
+            symbol STRING,
+            date TIMESTAMP,
+            eps FLOAT
+        );
+        CREATE TABLE DIM_debt_to_equity_table (
+            symbol STRING,
+            date TIMESTAMP,
+            debt_to_equity FLOAT
+        );  
+        </code></pre></div>                            
+</section>
+        <section id="data-cleansing" class="py-5 bg-light">
+            <div class="container">
+                <strong>Loadstockstables.py</strong>:</p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+          import snowflake.connector
+          import pandas as pd
+          
+          # Establish the Snowflake connection
+          conn = snowflake.connector.connect(
+              user='********',
+              password='********',
+              account='********',
+              warehouse='********',
+              database='********',
+              schema='********'
+          )
+          
+          # Function to upload a DataFrame to Snowflake
+          def upload_to_snowflake(df, table_name):
+              # Create a cursor object
+              cur = conn.cursor()
+              # Upload the DataFrame to Snowflake
+              for _, row in df.iterrows():
+                  cur.execute(f"INSERT INTO {table_name} VALUES {tuple(row)}")
+              cur.close()
+          
+          # Load the CSV files into DataFrames
+          fact_df = pd.read_csv("FACT_stock_prices.csv")
+          dim_financial_ratios_df = pd.read_csv("DIM_financial_ratios_table.csv")
+          dim_sector_industry_df = pd.read_csv("DIM_sector_industry_table.csv")
+          dim_eps_df = pd.read_csv("DIM_eps_table.csv")
+          dim_debt_to_equity_df = pd.read_csv("DIM_debt_to_equity_table.csv")
+          
+          # Upload the DataFrames to Snowflake
+          upload_to_snowflake(fact_df, 'FACT_stock_prices')
+          upload_to_snowflake(dim_financial_ratios_df, 'DIM_financial_ratios_table')
+          upload_to_snowflake(dim_sector_industry_df, 'DIM_sector_industry_table')
+          upload_to_snowflake(dim_eps_df, 'DIM_eps_table')
+          upload_to_snowflake(dim_debt_to_equity_df, 'DIM_debt_to_equity_table')
+          
+          # Close the Snowflake connection
+          conn.close()
+          
+          
+        </code></pre></div>
+                            
+</section>
+
+                            
+</section>
+<!-- Data Model Section -->
+<section id="data-model" class="py-5">
+    <div class="container">
+        <h2>Data Model</h2>
+        <p>Below is a screenshot of the data model after cleansed and prepared tables were read into Power BI.</p>
+        <img src="./Stocks performance Picture/DATA MODEL.jpg" alt="Data Model Screenshot" class="img-fluid mb-4">
+        <p>This setup ensures a comprehensive and integrated approach to analyzing stock performance and related financial metrics.</p>
+    </div>
+</section>
+
+<!-- Sales Management Dashboard Section -->
+<section id="sales-dashboard" class="py-5">
+    <div class="container">
+        <h2>Stocks Performance Dashboard</h2>
+        <p>The finished stocks performance dashboard consists of a single main page that serves as a comprehensive overview. This page features key financial metrics, detailed tables, and visualizations that showcase stock performance trends over time. It includes important figures like stock price, debt to equity ratio, trading volume, return on equity (ROE), dividend yield, and the price to earnings ratio. Users can interact with dropdown menus to filter the data by year and month, providing a clear and insightful view of stock performance within an industry,.</p>
+        <div class="text-center">
+            <!-- <p><strong>Click the picture to open the dashboard and try it out!</strong></p> -->
+            <a href="URL_DEL_DASHBOARD" target="_blank">
+                <img src="./Stocks performance Picture/DASHBOARD.jpg" class="img-fluid mb-4" alt="Sales Management Dashboard">
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Contact Me Section -->
+<section id="contact" class="contact-section text-center text-white bg-dark">
+  <div class="container">
+    <h2>Contact Me</h2>
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-6">
+        <p><i class="fas fa-envelope"></i> joelha3305@gmail.com</p>
+      </div>
+      <div class="col-lg-6">
+        <p><i class="fas fa-phone"></i> +52 3344423121</p>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center mt-3">
+      <!-- Contenedor Flex para ambos enlaces -->
+      <div class="d-flex align-items-center justify-content-center">
+        <a href="https://www.linkedin.com/in/joel-herrera-anlehu/" target="_blank" class="mx-3">
+          <img src="icons/linkedin.png" alt="LinkedIn" class="social-icon">
+          LinkedIn
+        </a>
+        <a href="https://github.com/joelhh17" target="_blank" class="mx-3">
+          <img src="icons/github.png" alt="GitHub" class="social-icon">
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.5/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

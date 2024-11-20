@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Portfolio Project</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Style.css">
+</head>
+
+<body>
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Visual Overview Section -->
+    <style>
+
+        .sql-code-block {
+            background-color: #e0e0e0; /* Gris claro */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-family: 'Courier New', Courier, monospace; /* Fuente tipo código */
+            font-size: 16px;
+            overflow-x: auto; /* Para que se haga scroll si el código es largo */
+        }
+    </style>
+
+    <section id="visual-overview" class="py-5">
+        <div class="container mt-5">
+            
+            <h1>Sales Management Project</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="./Sales-Management Pictures/Dashboard.jpg" class="img-fluid mb-4" alt="Power BI Dashboard">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Sales-Management Pictures/DATAModel.jpg" class="img-fluid mb-4" alt="Data-Model">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Sales-Management Pictures/SQLQuery.jpg" class="img-fluid mb-4" alt="SQL Code">
+                </div>
+                <div class="col-md-6">
+                    <img src="./Sales-Management Pictures/Excel.jpg" class="img-fluid mb-4" alt="Excel Spreadsheet">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Request & User Stories Section -->
+    <section id="business-request" class="py-5 bg-light">
+        <div class="container">
+            <h2>Business Request & User Stories</h2>
+            <p>The goal of this data analysis project was to deliver an executive sales report designed for sales managers. To address the business requirements effectively, a set of user stories was outlined to guide the project and ensure all deliverables met the defined acceptance criteria throughout its development.</p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>As a (role)</th>
+                        <th>I want (request/demand)</th>
+                        <th>So that I (user value)</th>
+                        <th>Acceptance Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Sales Manager</td>
+                        <td>To get a dashboard overview of internet sales</td>
+                        <td>Can follow better which customers and products sell the best</td>
+                        <td>A Power BI dashboard which updates data once a day</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sales Representative</td>
+                        <td>A detailed overview of Internet Sales per Customers</td>
+                        <td>Can follow up my customers that buy the most and who we can sell more to</td>
+                        <td>A Power BI dashboard which allows me to filter data for each customer</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Sales Representative</td>
+                        <td>A detailed overview of Internet Sales per Products</td>
+                        <td>Can follow up my products that sell the most</td>
+                        <td>A Power BI dashboard which allows me to filter data for each product</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Sales Manager</td>
+                        <td>A dashboard overview of internet sales</td>
+                        <td>Follow sales over time against budget</td>
+                        <td>A Power BI dashboard with graphs and KPIs comparing against budget</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+        <section id="data-cleansing" class="py-5 bg-light">
+            <div class="container">
+                <h2>Data Cleansing & Transformation (SQL)</h2>
+                <p>To construct the required data model for analysis and address the business requirements outlined in the user stories, the following tables were extracted using SQL.</p>
+                <p>One of the data sources, sales budgets, was provided in Excel format and integrated into the data model during a later phase of the process.</p>
+                <p> The SQL statements below were used to clean and transform the necessary data.</p>
+                <strong>DIM_Calendar</strong>:</p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+            -- Cleansed DIM_Date Table --
+            SELECT 
+              [DateKey], 
+              [FullDateAlternateKey] AS Date, 
+              --[DayNumberOfWeek], 
+              [EnglishDayNameOfWeek] AS Day, 
+              --[SpanishDayNameOfWeek], 
+              --[FrenchDayNameOfWeek], 
+              --[DayNumberOfMonth], 
+              --[DayNumberOfYear], 
+              --[WeekNumberOfYear],
+              [EnglishMonthName] AS Month, 
+              Left([EnglishMonthName], 3) AS MonthShort,   -- Useful for front end date navigation and front end graphs.
+              --[SpanishMonthName], 
+              --[FrenchMonthName], 
+              [MonthNumberOfYear] AS MonthNo, 
+              [CalendarQuarter] AS Quarter, 
+              [CalendarYear] AS Year --[CalendarSemester], 
+              --[FiscalQuarter], 
+              --[FiscalYear], 
+              --[FiscalSemester] 
+            FROM 
+             [AdventureWorksDW2019].[dbo].[DimDate]
+            WHERE 
+              CalendarYear >= 2019
+        </code>
+                </pre>
+            </div>
+        
+            <div class="container">
+                <strong>DIM_Customers</strong>:</p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+            -- Cleansed DIM_Customers Table --
+            SELECT 
+              c.customerkey AS CustomerKey, 
+              --      ,[GeographyKey]
+              --      ,[CustomerAlternateKey]
+              --      ,[Title]
+              c.firstname AS [First Name], 
+              --      ,[MiddleName]
+              c.lastname AS [Last Name], 
+              c.firstname + ' ' + lastname AS [Full Name], 
+              -- Combined First and Last Name
+              --      ,[NameStyle]
+              --      ,[BirthDate]
+              --      ,[MaritalStatus]
+              --      ,[Suffix]
+              CASE c.gender WHEN 'M' THEN 'Male' WHEN 'F' THEN 'Female' END AS Gender,
+              --      ,[EmailAddress]
+              --      ,[YearlyIncome]
+              --      ,[TotalChildren]
+              --      ,[NumberChildrenAtHome]
+              --      ,[EnglishEducation]
+              --      ,[SpanishEducation]
+              --      ,[FrenchEducation]
+              --      ,[EnglishOccupation]
+              --      ,[SpanishOccupation]
+              --      ,[FrenchOccupation]
+              --      ,[HouseOwnerFlag]
+              --      ,[NumberCarsOwned]
+              --      ,[AddressLine1]
+              --      ,[AddressLine2]
+              --      ,[Phone]
+              c.datefirstpurchase AS DateFirstPurchase, 
+              --      ,[CommuteDistance]
+              g.city AS [Customer City] -- Joined in Customer City from Geography Table
+            FROM 
+              [AdventureWorksDW2019].[dbo].[DimCustomer] as c
+              LEFT JOIN dbo.dimgeography AS g ON g.geographykey = c.geographykey 
+            ORDER BY 
+              CustomerKey ASC -- Ordered List by CustomerKey
+        </code>
+                </pre>
+            </div>
+        
+            <div class="container mt-5">
+                <strong>DIM_Products</strong></p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+            -- Cleansed DIM_Products Table --
+            SELECT 
+              p.[ProductKey], 
+              p.[ProductAlternateKey] AS ProductItemCode, 
+              --      ,[ProductSubcategoryKey], 
+              --      ,[WeightUnitMeasureCode]
+              --      ,[SizeUnitMeasureCode] 
+              p.[EnglishProductName] AS [Product Name], 
+              ps.EnglishProductSubcategoryName AS [Sub Category], -- Joined in from Sub Category Table
+              pc.EnglishProductCategoryName AS [Product Category], -- Joined in from Category Table
+              --      ,[SpanishProductName]
+              --      ,[FrenchProductName]
+              --      ,[StandardCost]
+              --      ,[FinishedGoodsFlag] 
+              p.[Color] AS [Product Color], 
+              --      ,[SafetyStockLevel]
+              --      ,[ReorderPoint]
+              --      ,[ListPrice] 
+              p.[Size] AS [Product Size], 
+              --      ,[SizeRange]
+              --      ,[Weight]
+              --      ,[DaysToManufacture]
+              p.[ProductLine] AS [Product Line], 
+              --     ,[DealerPrice]
+              --      ,[Class]
+              --      ,[Style] 
+              p.[ModelName] AS [Product Model Name], 
+              --      ,[LargePhoto]
+              p.[EnglishDescription] AS [Product Description], 
+              --      ,[FrenchDescription]
+              --      ,[ChineseDescription]
+              --      ,[ArabicDescription]
+              --      ,[HebrewDescription]
+              --      ,[ThaiDescription]
+              --      ,[GermanDescription]
+              --      ,[JapaneseDescription]
+              --      ,[TurkishDescription]
+              --      ,[StartDate], 
+              --      ,[EndDate], 
+              ISNULL (p.Status, 'Outdated') AS [Product Status] 
+            FROM 
+              [AdventureWorksDW2019].[dbo].[DimProduct] as p
+              LEFT JOIN dbo.DimProductSubcategory AS ps ON ps.ProductSubcategoryKey = p.ProductSubcategoryKey 
+              LEFT JOIN dbo.DimProductCategory AS pc ON ps.ProductCategoryKey = pc.ProductCategoryKey 
+            order by 
+              p.ProductKey asc
+        </code>
+                </pre>
+            </div>
+        
+            <div class="container">
+                <strong>FACT_InternetSales:</strong></p>
+                <pre class="sql-code-block">
+        <code class="language-sql">
+            -- Cleansed FACT_InternetSales Table --
+            SELECT 
+              [ProductKey], 
+              [OrderDateKey], 
+              [DueDateKey], 
+              [ShipDateKey], 
+              [CustomerKey], 
+              --  ,[PromotionKey]
+              --  ,[CurrencyKey]
+              --  ,[SalesTerritoryKey]
+              [SalesOrderNumber], 
+              --  [SalesOrderLineNumber], 
+              --  ,[RevisionNumber]
+              --  ,[OrderQuantity], 
+              --  ,[UnitPrice], 
+              --  ,[ExtendedAmount]
+              --  ,[UnitPriceDiscountPct]
+              --  ,[DiscountAmount] 
+              --  ,[ProductStandardCost]
+              --  ,[TotalProductCost] 
+              [SalesAmount] --  ,[TaxAmt]
+              --  ,[Freight]
+              --  ,[CarrierTrackingNumber] 
+              --  ,[CustomerPONumber] 
+              --  ,[OrderDate] 
+              --  ,[DueDate] 
+              --  ,[ShipDate] 
+            FROM 
+              [AdventureWorksDW2019].[dbo].[FactInternetSales]
+            WHERE 
+              LEFT (OrderDateKey, 4) >= YEAR(GETDATE()) -2 -- Ensures we always only bring two years of date from extraction.
+            ORDER BY
+              OrderDateKey ASC
+        </code>
+                </pre>
+            </div>
+        </section>
+        
+  
+        
+
+</section>
+
+<!-- Data Model Section -->
+<section id="data-model" class="py-5">
+    <div class="container">
+        <h2>Data Model</h2>
+        <p>Below is a screenshot of the data model after cleansed and prepared tables were read into Power BI.</p>
+        <img src="./Sales-Management Pictures/DATAModel.jpg" alt="Data Model Screenshot" class="img-fluid mb-4">
+        <p>This data model also shows how FACT_Budget has been connected to FACT_InternetSales and other necessary DIM tables.</p>
+    </div>
+</section>
+
+<!-- Sales Management Dashboard Section -->
+<section id="sales-dashboard" class="py-5">
+    <div class="container">
+        <h2>Sales Management Dashboard</h2>
+        <p>The finished sales management dashboard includes one main page serving as a dashboard and overview, with two additional pages combining tables for necessary details and visualizations to show sales over time, per customers, and per products.</p>
+        <div class="text-center">
+            <!-- <p><strong>Click the picture to open the dashboard and try it out!</strong></p> -->
+            <a href="URL_DEL_DASHBOARD" target="_blank">
+                <img src="./Sales-Management Pictures/Dashboard.jpg" class="img-fluid mb-4" alt="Sales Management Dashboard">
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Contact Me Section -->
+<section id="contact" class="contact-section text-center text-white bg-dark">
+  <div class="container">
+    <h2>Contact Me</h2>
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-6">
+        <p><i class="fas fa-envelope"></i> joelha3305@gmail.com</p>
+      </div>
+      <div class="col-lg-6">
+        <p><i class="fas fa-phone"></i> +52 3344423121</p>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center mt-3">
+      <!-- Contenedor Flex para ambos enlaces -->
+      <div class="d-flex align-items-center justify-content-center">
+        <a href="https://www.linkedin.com/in/joel-herrera-anlehu/" target="_blank" class="mx-3">
+          <img src="icons/linkedin.png" alt="LinkedIn" class="social-icon">
+          LinkedIn
+        </a>
+        <a href="https://github.com/joelhh17" target="_blank" class="mx-3">
+          <img src="icons/github.png" alt="GitHub" class="social-icon">
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.5/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
